@@ -68,3 +68,40 @@ export interface Scenario {
 }
 
 export type SimulationState = 'idle' | 'running' | 'paused' | 'training';
+
+// Hardware connection types
+export type ConnectionType = 'serial' | 'wifi' | 'bluetooth' | 'none';
+export type ConnectionState = 'disconnected' | 'connecting' | 'connected' | 'error';
+
+export interface HardwareConfig {
+  connectionType: ConnectionType;
+  serialPort?: string;
+  baudRate: number;
+  wifiIP?: string;
+  wifiPort?: number;
+  boardType: 'esp32' | 'arduino_uno' | 'arduino_mega' | 'arduino_nano';
+}
+
+export interface HardwareTelemetry {
+  timestamp: number;
+  sensors: number[];
+  motorSpeeds: number[];
+  battery: number;
+  imu: { roll: number; pitch: number; yaw: number };
+  status: string;
+}
+
+export interface NeuralWeights {
+  inputWeights: number[][];
+  inputBiases: number[];
+  hiddenWeights: number[][];
+  hiddenBiases: number[];
+  generation: number;
+  fitness: number;
+}
+
+export interface SerialMessage {
+  type: 'sensor_data' | 'motor_cmd' | 'weights_upload' | 'status' | 'telemetry' | 'command';
+  payload: any;
+  timestamp: number;
+}
